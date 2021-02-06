@@ -19,6 +19,19 @@ app.use(express.urlencoded({
 const sessions = [];
 const SESSIONS_FILE = './static/whatsapp-sessions.json';
 
+const createSessionsFileIfNotExists = () =>{
+    if (!fs.existsSync(SESSIONS_FILE)) {
+        try {
+            fs.writeFileSync(SESSIONS_FILE, JSON.stringify([]));
+            console.log('Sessions file created successfully.');
+        } catch(err) {
+            console.log('Failed to create sessions file: ', err);
+        }
+    }
+}
+  
+createSessionsFileIfNotExists();
+
 const setSessionsFile = (sessions) => {
     fs.writeFile(SESSIONS_FILE, JSON.stringify(sessions), (err) => {
         if(err){
@@ -62,7 +75,7 @@ const createSession = async (id) => {
 
     client.on('qr', (qr) => {
         // Generate and scan this code with your phone
-        console.log('QR RECEIVED', qr);
+        // console.log('QR RECEIVED', qr);
         qrcode.toDataURL(qr, (err, url) => {
             console.log('QR RECEIVED', url);
 
@@ -113,7 +126,7 @@ const createSession = async (id) => {
         });
     });
 
-    client.on('auth_failure', function(session) {
+    client.on('auth_failure', (session) =>{
         io.emit('message', { 
             id: id, 
             text: 'Auth failure, restarting...' 
@@ -165,7 +178,7 @@ const init = (socket) => {
             socket.emit('init', savedSessions);
         } else {
             savedSessions.forEach(sess => {
-                createSession(sess.id, sess.description)
+                createSession(sess.id)
             });
         }
     }
