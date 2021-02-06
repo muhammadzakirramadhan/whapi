@@ -1,0 +1,33 @@
+{
+  "name": "whapi",
+  "version": "1.0.0",
+  "description": "WhatsApp Api Gateaway",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muhammadzakirramadhan/whapi.git"
+  },
+  "keywords": [
+    "whatsapp-api",
+    "whatsapp",
+    "whapi"
+  ],
+  "author": "Muhammad Zakir Ramadhan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/muhammadzakirramadhan/whapi/issues"
+  },
+  "homepage": "https://github.com/muhammadzakirramadhan/whapi#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "qrcode": "^1.4.4",
+    "socket.io": "^3.1.1",
+    "whatsapp-web.js": "^1.12.1"
+  }
+}
