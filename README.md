@@ -24,3 +24,9 @@ Command Development
  
 
 > Untuk Api masih di develop karena ada beberapa kendala saat save device baru
+
+## Untuk Contribute
+
+Silahkan Commit dengan branch :
+
+    username-commit-(pembaruan yang di lakukan) 
