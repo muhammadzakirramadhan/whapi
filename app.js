@@ -77,7 +77,7 @@ const createSession = async (id) => {
         // Generate and scan this code with your phone
         // console.log('QR RECEIVED', qr);
         qrcode.toDataURL(qr, (err, url) => {
-            console.log('QR RECEIVED', url);
+            // console.log('QR RECEIVED', url);
 
             io.emit('qr', { 
                 id: id, 
@@ -157,9 +157,11 @@ const createSession = async (id) => {
         client:client
     });
 
+    console.log(sessions)
+
     const savedSessions = getSessionsFile()
     const sessionsIndex = savedSessions.findIndex(sess => sess.id = id)
-
+    console.log(sessionsIndex)
     if(sessionsIndex == -1){
         savedSessions.push({
             id:id,
@@ -184,12 +186,13 @@ const init = (socket) => {
     }
 }
 
+init();
 // socket.io
 
 io.on('connection', (socket) => {
     init(socket)
     socket.on('create-session', (data) => {
-        console.log(data)
+        // console.log(data)
         createSession(data.id);
     })
 })

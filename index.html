@@ -36,23 +36,39 @@
         <div class="client hide">
             <div class="col-lg-12">
                 <div class="row">
-                    <div class="col-md-4 qrc">
+                    <div class="col-md-4 qrc" style="display: none;">
                         <div class="card card-default">
                             <div class="card-header">
-                                <h3>QRCode</h3>
+                                <h4>QRCode</h4>
                             </div>
                             <div class="card-body">
-                                <img src="" alt="QRCode" id="qrcode" style="display: none;">
+                                <img src="" alt="QRCode" id="qrcode">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card card-default">
                             <div class="card-header">
-                                <h3 class="title"></h3>
+                                <h4>Logs</h4>
+                                <!-- <h3 class="title"></h3> -->
                             </div>
                             <div class="card-body">
                                 <ul class="logs"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-default">
+                            <div class="card-header">
+                                <h4>Token</h4>
+                                <!-- <h3 class="title"></h3> -->
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="token">Token : </label>
+                                    <input type="text" id="myInput" class="form-control token" value="" readonly>
+                                </div>
+                                <!-- <button class="btn btn-info" onclick="copy()">Copy</button> -->
                             </div>
                         </div>
                     </div>
@@ -70,18 +86,6 @@
 
             if(_token){
                $('.btnAdd').hide() 
-                // let data = {
-                //     id: _token
-                // }
-                
-                // var template = $('.client').first().clone().removeClass('hide').addClass(_token) 
-                // template.find('.title').html('Token : ' + _token)
-               
-                // $('.client-container').append(template)
-                
-                // socket.emit('create-session', data);
-                // // window.localStorage.setItem('_token', token);
-                // console.log(_token)
             }
 
             $('.btnAdd').click(function(){
@@ -91,7 +95,8 @@
                 }
                 
                 var template = $('.client').first().clone().removeClass('hide').addClass(token) 
-                template.find('.title').html('Token : ' + token)
+                template.find('.token').val(token)
+                template.find('.qrc').show()
                
                 $('.client-container').append(template)
                 
@@ -112,7 +117,7 @@
                     var __token = window.localStorage.getItem('_token');
 
                     if(clientId == __token){
-                        template.find('.title').html('Token : ' + clientId)
+                        template.find('.token').val(clientId)
                     
                         $('.client-container').append(template)
 
@@ -131,21 +136,25 @@
             })
 
             socket.on('message', function(data){
+                console.log(data)
                 $(`.client.${data.id} .logs`).append($('<li>').text(data.text));
             });
 
             socket.on('qr', function(data){
-                console.log(data.src)
+                console.log(data)
+                $(`.client.${data.id} .qrc`).show();
                 $(`.client.${data.id} #qrcode`).attr('src', data.src);
                 $(`.client.${data.id} #qrcode`).show();
             })
 
             socket.on('ready', function(data){
                 $(`.client.${data.id} #qrcode`).hide();
+                $(`.client.${data.id} .qrc`).hide();
             });
 
             socket.on('authenticated', function(data){
                 $(`.client.${data.id} #qrcode`).hide();
+                $(`.client.${data.id} .qrc`).hide();
             });
 
         });
