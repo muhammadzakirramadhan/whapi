@@ -125,6 +125,7 @@
                             $(`.client.${session.id} .logs`).append($('<li>').text('WhatsApp Is Ready!'));
                         } else {
                             $(`.client.${session.id} .logs`).append($('<li>').text('Connecting....'));
+                            template.find('.qrc').show()
                         }
                     }
                 }                
