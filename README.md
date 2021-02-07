@@ -16,3 +16,11 @@ Command Development
 
     npm run dev
 
+## Todo
+
+ - [x] Frontend
+ - [ ] Rest Api
+ - [ ] Dokumentasi Api
+ 
+
+> Untuk Api masih di develop karena ada beberapa kendala saat save device baru
